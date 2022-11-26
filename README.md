@@ -14,3 +14,5 @@ Hold SHIFT + ESC to kill the program and release your mouse.
 # Download
 
 You can download the program directly from this link:
+
+https://github.com/ils94/MMOAction/releases/download/release/MMOAction.zip
