@@ -56,13 +56,13 @@ print("Hold SHIFT + ESC to kill the program and release your mouse.")
 
 while True:
     while on:
-        if not keyboard.is_pressed("Capslock"):
+        if not keyboard.is_pressed("Shift"):
             if pyautogui.position().x != width and pyautogui.position().y != height and middle:
                 pyautogui.moveTo(width, height)
 
             pyautogui.mouseDown(button="right")
 
-        if keyboard.is_pressed("Capslock"):
+        if keyboard.is_pressed("Shift"):
             pyautogui.mouseUp(button="right")
 
         if keyboard.is_pressed("Shift"):
