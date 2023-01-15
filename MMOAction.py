@@ -4,6 +4,9 @@ import subprocess
 import keyboard
 import time
 from screeninfo import get_monitors
+import ctypes
+
+user32 = ctypes.WinDLL("user32.dll")
 
 on = False
 
@@ -57,6 +60,8 @@ print("Hold SHIFT + ESC to kill the program and release your mouse.")
 while True:
     while on:
         if not keyboard.is_pressed("CAPSLOCK"):
+            if user32.GetKeyState(0x14):
+                keyboard.press("CAPSLOCK")
             if pyautogui.position().x != width and pyautogui.position().y != height and middle:
                 pyautogui.moveTo(width, height)
 
