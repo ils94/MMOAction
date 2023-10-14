@@ -1,21 +1,18 @@
-import sys
-import pyautogui
-import subprocess
 import keyboard
-import time
+import pyautogui
 from screeninfo import get_monitors
-import ctypes
 
-user32 = ctypes.WinDLL("user32.dll")
-
-on = False
-
-middle = None
+hotkey_hold_right_mouse = "shift+alt"
+hotkey_kill_script = "shift+alt+ctrl"
 
 height = 0
 width = 0
 
-tick = 0.1
+print("MMO Action is now running!\n")
+print("HOW TO USE:\n")
+print("Press SHIFT + ALT to lock your right mouse button into action camera.\n")
+print("Pressing the right mouse button while it locked, will release it. You will have to press SHIFT + ALT again to lock it back into action camera.\n")
+print("Press SHIFT + ALT + CTRL to kill the script.\n")
 
 for m in get_monitors():
     if m.is_primary:
@@ -23,68 +20,21 @@ for m in get_monitors():
         width = m.width / 2
 
 
-def quick_exit():
-    if keyboard.is_pressed("Shift"):
-        if keyboard.is_pressed("Esc"):
-            pyautogui.mouseUp(button="right")
-            sys.exit()
+def lock_right_mouse_button():
+    pyautogui.moveTo(width, height)
+    pyautogui.mouseDown(button="right")
 
 
-def cursor():
-    global middle
-
-    option = input("Always move cursor to the middle of the screen? Y/N"
-                   "\nInput: ")
-
-    if option.upper() == "Y":
-        middle = True
-    elif option.upper() == "N":
-        middle = False
-    else:
-        subprocess.run("cls", shell=True)
-        cursor()
-
-    subprocess.run("cls", shell=True)
+def release_right_mouse_button():
+    pyautogui.mouseUp(button="right")
 
 
-cursor()
+keyboard.add_hotkey(hotkey_hold_right_mouse, lock_right_mouse_button)
+keyboard.add_hotkey(hotkey_kill_script, release_right_mouse_button)
 
-print("MMO Action is now running!\n")
-print("HOW TO USE:\n")
-print("Hold SHIFT + ALT to lock your right mouse button into action camera.\n")
-print("Hold SHIFT + CTRL to release your right mouse button from action camera.\n")
-print("Holding CAPSLOCK while the right mouse button is locked into action camera, will release it so you can interact "
-      "with NPCs and objects in game. Releasing CAPSLOCK will lock your mouse back into action camera.\n")
-print("Hold SHIFT + ESC to kill the program and release your mouse.")
+try:
+    keyboard.wait(hotkey_kill_script)
+except Exception as e:
+    print(e)
 
-while True:
-    while on:
-        if not keyboard.is_pressed("CAPSLOCK"):
-            if user32.GetKeyState(0x14):
-                keyboard.press("CAPSLOCK")
-            if pyautogui.position().x != width and pyautogui.position().y != height and middle:
-                pyautogui.moveTo(width, height)
-
-            pyautogui.mouseDown(button="right")
-
-        if keyboard.is_pressed("CAPSLOCK"):
-            pyautogui.mouseUp(button="right")
-
-        if keyboard.is_pressed("Shift"):
-            if keyboard.is_pressed("Ctrl"):
-                pyautogui.mouseUp(button="right")
-                on = False
-        if not on:
-            break
-
-        quick_exit()
-
-        time.sleep(tick)
-
-    if keyboard.is_pressed("Shift") and not on:
-        if keyboard.is_pressed("Alt"):
-            on = True
-
-    quick_exit()
-
-    time.sleep(tick)
+keyboard.remove_hotkey(hotkey_hold_right_mouse)
