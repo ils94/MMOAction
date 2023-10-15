@@ -9,6 +9,18 @@ Pressing the right mouse button while it locked, will release it. You will have 
 
 Press SHIFT + ALT + CTRL to kill the script.
 
+You can change the above hotkeys by closing MMOAction, and adding your own set of hotkeys in the "hotkeys.txt" file inside the root folder.
+
+Read the instructions below:
+
+You do not add "[]" into the file, they are here just to make the example better to understand.
+
+[a,esc] <- Changes the default "Action Camera Mode" hotkey to "a", and changes the default hotkey to kill the script to "esc".
+
+[,esc] <- Keep the default "Action Camera Mode" hotkey, and changes the default hotkey to kill script to "esc".
+
+[a,] <- Changes the default "Action Camera Mode" hotkey to "a", and keep the default hotkey to kill the script.
+
 # Download
 
 You can download the program directly from this link:
