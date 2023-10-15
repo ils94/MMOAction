@@ -1,7 +1,6 @@
 import keyboard
 import pyautogui
 import os
-import re
 from screeninfo import get_monitors
 
 height = 0
